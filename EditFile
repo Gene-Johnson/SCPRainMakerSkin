@@ -1,0 +1,1474 @@
+;=============================================================================;
+; NOTE:                                                                       ;
+; Most settings can be changed in the Variables.inc file.                     ;
+; Right click the skin and select "Open settings".                            ;
+; One value that can only be changed here is the Update value. Changing this  ;
+; can increase performance.                                                   ;
+; Another important aspect in increasing performance is to use fewer images   ;
+; and links.                                                                  ;
+;=============================================================================;
+
+[Rainmeter]
+Update=10
+DefaultUpdateDivider=20
+AccurateText=1
+ContextTitle="Open user settings"
+ContextAction=["#@#UserSettings.inc"]
+ContextTitle2="Open settings"
+ContextAction2=["#@#Variables.inc"]
+
+
+
+[Metadata]
+Name=SCP-C-COM
+Author=Maximillion106
+Version=1.0
+Information=An SCP Based Skin from the SCP: Containment Breach games. Enjoy!
+License=Creative Commons Attribution-Non-Commercial-Share Alike 3.0
+
+[Variables]
+@IncludeVariables=#@#Variables.inc
+@IncludeUserSettings=#@#UserSettings.inc
+UrlRegex=(https?:\/\/(?:www\.|(?!www))[^ \t\.]+\.[^\t ]{2,}|www\.[^\t ]+\.[^\t ]{2,})
+
+;====================Variables==============
+
+;The text value that is changed by Actiontimer-MeasureTypeWriter
+TEXTVAR = ""
+
+REDTEXTVAR=
+
+GREENTEXTVAR=
+
+WHITETEXTVAR=
+
+TEXTBOOT = ""
+
+TestText="Hello World"
+;The initial wait time before starting Actiontimer-MeasureTypeWriter
+TwaitInitial=500
+
+;The wait period between typing
+Twait=300
+
+;How fast to type words
+Ttype=80
+
+;How fast to load
+Tload=130
+
+;variable used to adjust GUI fading
+FadeDiffrence=0
+
+
+;warning stripes fade
+WarnStripesFade_1=0
+WarnStripesFade_2=0
+WarnStripesFade_3=0
+WarnStripesFade_4=0
+WarnStripesFade_5=0
+SetWarningStripe6=0
+
+
+;loading options system
+Fadeload_1=0
+Fadeload_2=0
+Fadeload_3=0
+Fadeload_4=0
+Fadeload_5=0
+Fadeload_6=0
+Fadeload_7=0
+Fadeload_8=0
+Fadeload_9=0
+Fadeload_10=0
+
+Flicker_Value=100
+;=============================================================================;
+;------------------------------- SCP Desktop System---------------------------;
+;=============================================================================;
+
+[CaConsolasummy]
+Measure=Calc
+Formula=1
+UpdateDivider=-1
+OnUpdateAction=[!HideMeter MeterChannelInputLabel][!SetWallpaper "#@#\images\wallpaper.png" ]
+
+[MeasureHotkeyRefresh]
+Measure=Plugin
+Plugin=HotKey
+HotKey=CTRL R
+KeyDownAction=!RefreshApp
+DynamicVariables=1
+
+;This Measure produces the random variables that decide the wait time between changes in fade
+[MeasureCathodRayTubeRandomFade]
+Measure=Calc
+Formula=Random
+LowBound=10
+HighBound=100
+UpdateRandom=1
+DynamicVariables=1
+UpdateDivider=1
+
+[Measure_Animation_Timer]
+Measure=Calc
+Formula=[Measure_Animation_Timer]+1
+IfAboveValue=1000
+IfAboveAction=[!PauseMeasure "Measure_Animation_Timer"]
+DynamicVariables=1
+UpdateDivider=1
+
+[MeasureFadingGUI]
+Measure=Calc
+Formula=[Measure_Animation_Timer]*5
+IfAboveValue=300
+IfAboveAction=[!PauseMeasure "MeasureFadingGUI"]
+DynamicVariables=1
+UpdateDivider=1
+
+;This measure shows the warning stripes
+[MeasureWarningStripesActivate]
+Measure=Calc
+Formula=[Measure_Animation_Timer]
+IfAboveValue=100
+IfAboveAction=[!CommandMeasure MeasureWarningStripes "Execute 1"]
+DynamicVariables=1
+UpdateDivider=1
+
+;--------------------------PC Stats measures for Terminal Control----------------------------
+[measureCPU]
+; This measure returns the average CPU load between all cores.
+Measure=CPU
+Processor=0
+
+[measureRAM]
+; Returns the amount of RAM used in bytes.
+Measure=PhysicalMemory
+UpdateDivider=20
+; UpdateDivider sets the rate at which the value of the measure is updated. It is
+; calculated as follows: UpdateDivider x Update. In this case, Update is set to
+; 1000 milliseconds (in the [Rainmeter] section). 1000 x 20 = 20000 ms or 20 seconds.
+
+[measureSWAP]
+; Returns the amount of SWAP (pagefile) used in bytes.
+Measure=SwapMemory
+UpdateDivider=20
+
+
+;--------------------------TIME MEASURES: CREDIT TO ILLUSTRO 'CLOCK' SKIN--------------------
+[measureTime]
+; This measure returns the time in a 24-hour format (i.e. HH:MM).
+Measure=Time
+Format=%H:%M
+; For a 12-hour clock, change the Format option above to: %I:%M %p
+; Refer to the Rainmeter manual for other format codes.
+
+[measureDate]
+; Returns the date as DD.MM.YYYY
+Measure=Time
+Format=%d.%m.%Y
+
+[measureDay]
+; Returns the current day
+Measure=Time
+Format=%A
+
+[MeasureLoadingValues]
+Measure=Plugin
+Plugin=ActionTimer
+ActionList1=SetLoadValueFade0 |Wait #Ttype#| SetLoadValueFade1 |Wait #Ttype#| SetLoadValueFade2 |Wait #Ttype#| SetLoadValueFade3 |Wait #Ttype#| SetLoadValueFade4 |Wait #Ttype#| SetLoadValueFade5|Wait #Ttype#| SetLoadValueFade6|Wait #Ttype#| SetLoadValueFade7|Wait #Ttype#| SetLoadValueFade8|Wait #Ttype#| SetLoadValueFade9|Wait #Ttype#| SetLoadValueFade10|Wait #Ttype#| SetLoadValueFade11|Wait #Ttype#| SetLoadValueFade12|Wait #Ttype#| SetLoadValueFade13|Wait #Ttype#| SetLoadValueFade14|Wait #Ttype#| SetLoadValueFade15|Wait #Ttype#| SetLoadValueFade16|Wait #Ttype#| SetLoadValueFade17|Wait #Ttype#| SetLoadValueFade18|Wait #Ttype#| SetLoadValueFade19|Wait #Ttype#| SetLoadValueFade20
+;As nothing happens immedietly, this actiontimer action is left blank as a dummy
+SetLoadValueFade0=
+
+SetLoadValueFade1=[!SetVariable Fadeload_1 "0"]
+SetLoadValueFade2=[!SetVariable Fadeload_2 "0"]
+SetLoadValueFade3=[!SetVariable Fadeload_3 "0"]
+SetLoadValueFade4=[!SetVariable Fadeload_4 "0"]
+SetLoadValueFade5=[!SetVariable Fadeload_5 "0"]
+SetLoadValueFade6=[!SetVariable Fadeload_6 "0"]
+SetLoadValueFade7=[!SetVariable Fadeload_7 "0"]
+SetLoadValueFade8=[!SetVariable Fadeload_8 "0"]
+SetLoadValueFade9=[!SetVariable Fadeload_9 "0"]
+SetLoadValueFade10=[!SetVariable Fadeload_10 "0"]
+SetLoadValueFade11=[!SetVariable Fadeload_1 "255"]
+SetLoadValueFade12=[!SetVariable Fadeload_2 "255"]
+SetLoadValueFade13=[!SetVariable Fadeload_3 "255"]
+SetLoadValueFade14=[!SetVariable Fadeload_4 "255"]
+SetLoadValueFade15=[!SetVariable Fadeload_5 "255"]
+SetLoadValueFade16=[!SetVariable Fadeload_6 "255"]
+SetLoadValueFade17=[!SetVariable Fadeload_7 "255"]
+SetLoadValueFade18=[!SetVariable Fadeload_8 "255"]
+SetLoadValueFade19=[!SetVariable Fadeload_9 "255"]
+SetLoadValueFade20=[!SetVariable Fadeload_10 "255"][!SetVariable WHITETEXTVAR "Accessing Main Directory...#CRLF#Done."]
+
+
+[MeasureWarningStripes]
+Measure=Plugin
+Plugin=ActionTimer
+ActionList1=SetWarningStripe0 |Wait #Ttype#| SetWarningStripe1 |Wait #Ttype#| SetWarningStripe2 |Wait #Ttype#| SetWarningStripe3 |Wait #Ttype#| SetWarningStripe4 |Wait #Ttype#| SetWarningStripe5|Wait #Ttype#| SetWarningStripe6|Wait #Ttype#| SetWarningStripe7|Wait #Ttype#| SetWarningStripe8|Wait #Ttype#| SetWarningStripe9|Wait #Ttype#| SetWarningStripe10|Wait #Ttype#| SetWarningStripe11|Wait #Ttype#| SetWarningStripe12|Wait #Ttype#| SetWarningStripe13|Wait #Ttype#| SetWarningStripe14|Wait #Ttype#| SetWarningStripe15|Wait #Ttype#| SetWarningStripe16|Wait #Ttype#| SetWarningStripe17|Wait #Ttype#| SetWarningStripe18|Wait #Ttype#| SetWarningStripe19|Wait #Ttype#| SetWarningStripe20|Wait #Ttype#| SetWarningStripe21|Wait #Ttype#| SetWarningStripe22|Wait #Ttype#| SetWarningStripe23|Wait #Ttype#| SetWarningStripe24|Wait #Ttype#| SetWarningStripe25|Wait #Ttype#| SetWarningStripe26|Wait #Ttype#| SetWarningStripe27|Wait #Ttype#| SetWarningStripe28
+;As nothing happens immedietly, this actiontimer action is left blank as a dummy
+SetWarningStripe0=
+
+SetWarningStripe1=[!SetVariable WarnStripesFade_1 "255"]
+SetWarningStripe2=[!SetVariable WarnStripesFade_2 "255"]
+SetWarningStripe3=[!SetVariable WarnStripesFade_3 "255"]
+SetWarningStripe4=[!SetVariable WarnStripesFade_4 "255"]
+SetWarningStripe5=[!SetVariable WarnStripesFade_5 "255"][!SetVariable TEXTBOOT "|"]
+SetWarningStripe6=[!SetVariable WarnStripesFade_6 "255"][!SetVariable TEXTBOOT ""]
+SetWarningStripe7=[!SetVariable WarnStripesFade_6 "255"][!SetVariable TEXTBOOT "|"]
+SetWarningStripe8=[!SetVariable TEXTBOOT ""]
+SetWarningStripe9=[!SetVariable TEXTBOOT "S|"]
+SetWarningStripe10=[!SetVariable TEXTBOOT "S-|"]
+SetWarningStripe11=[!SetVariable TEXTBOOT "S-C|"]
+SetWarningStripe12=[!SetVariable TEXTBOOT "S-CO|"]
+SetWarningStripe13=[!SetVariable TEXTBOOT "S-COM|"]
+SetWarningStripe14=[!SetVariable TEXTBOOT "S-COM |"]
+SetWarningStripe15=[!SetVariable TEXTBOOT "S-COM S|"]
+SetWarningStripe16=[!SetVariable TEXTBOOT "S-COM SO|"]
+SetWarningStripe17=[!SetVariable TEXTBOOT "S-COM SOF|"]
+SetWarningStripe18=[!SetVariable TEXTBOOT "S-COM SOFT|"]
+SetWarningStripe19=[!SetVariable TEXTBOOT "S-COM SOFTW|"]
+SetWarningStripe20=[!SetVariable TEXTBOOT "S-COM SOFTWA|"]
+SetWarningStripe21=[!SetVariable TEXTBOOT "S-COM SOFTWAR|"]
+SetWarningStripe22=[!SetVariable TEXTBOOT "S-COM SOFTWARE|"]
+SetWarningStripe23=[!SetVariable TEXTBOOT "S-COM SOFTWARE v|"]
+SetWarningStripe24=[!SetVariable TEXTBOOT "S-COM SOFTWARE v1|"]
+SetWarningStripe25=[!SetVariable TEXTBOOT "S-COM SOFTWARE v1.|"]
+SetWarningStripe26=[!SetVariable TEXTBOOT "S-COM SOFTWARE v1.3|"]
+SetWarningStripe27=[!SetVariable TEXTBOOT "S-COM SOFTWARE v1.3 |"]
+SetWarningStripe28=[!SetVariable TEXTBOOT "S-COM SOFTWARE v1.3 "]
+DynamicVariables=1
+UpdateDivider=1
+
+;This measure counts to 103 and then begins running the TypeWriter Actiontimer, and sets the wallpaper to the one with the GUI in the corner 
+[MeasureCountertext]
+Measure=Calc
+Formula=[Measure_Animation_Timer]
+IfAboveValue=150
+IfAboveAction=[!CommandMeasure MeasureTypeWriter "Execute 1"]
+DynamicVariables=1
+UpdateDivider=1
+
+
+
+[MeasureTypeWriter]
+Measure=Plugin
+Plugin=ActionTimer
+ActionList1=SetFontSmall |Wait #TwaitInitial#| SetFontBig1|Wait #TwaitInitial#| SetFontBig2|Wait #TwaitInitial#| SetFontBig3|Wait #TwaitInitial#| SetFontBig4|Wait #TwaitInitial#| SetFontBig5|Wait #TwaitInitial#| SetFontBig6|Wait #TwaitInitial#| SetFontBig7|Wait #TwaitInitial#| SetFontBig8|Wait #TwaitInitial#| SetFontBig9|Wait #TwaitInitial#| SetFontBig10 |Wait #TwaitInitial#| SetFontBig11|Wait #Ttype#| SetFontBig12|Wait #Ttype#| SetFontBig13|Wait #Ttype#| SetFontBig14|Wait #Ttype#| SetFontBig15|Wait #Ttype#| SetFontBig16|Wait #Ttype#| SetFontBig17|Wait #Ttype#| SetFontBig18|Wait #Ttype#| SetFontBig19|Wait #Ttype#| SetFontBig20 |Wait #Ttype#| SetFontBig21|Wait #Ttype#| SetFontBig22|Wait #Ttype#| SetFontBig23|Wait #Ttype#| SetFontBig24|Wait #Ttype#| SetFontBig25|Wait #Ttype#| SetFontBig26|Wait #Ttype#| SetFontBig27|Wait #Ttype#| SetFontBig28|Wait #Ttype#| SetFontBig29|Wait #Ttype#| SetFontBig30 |Wait #Ttype#| SetFontBig31|Wait #Ttype#| SetFontBig32|Wait #Ttype#| SetFontBig33|Wait #Ttype#| SetFontBig34|Wait #Ttype#| SetFontBig35|Wait #Ttype#| SetFontBig36|Wait #Ttype#| SetFontBig37|Wait #Ttype#| SetFontBig38|Wait #Ttype#| SetFontBig39|Wait #Ttype#| SetFontBig40 |Wait #Ttype#| SetFontBig41|Wait #Ttype#| SetFontBig42|Wait #Ttype#| SetFontBig43 |Wait #Ttype#| SetFontBig44|Wait #Ttype#| SetFontBig45 |Wait #Ttype#| SetFontBig46|Wait #Ttype#| SetFontBig47|Wait #Ttype#| SetFontBig48|Wait #Ttype#| SetFontBig49|Wait #Ttype#| SetFontBig50 |Wait #Ttype#| SetFontBig51|Wait #Ttype#| SetFontBig52|Wait #Ttype#| SetFontBig53|Wait #Ttype#| SetFontBig55|Wait #Ttype#| SetFontBig56|Wait #Ttype#| SetFontBig57|Wait #Twait#| SetFontBig58|Wait #Twait#| SetFontBig59|Wait #Twait#| SetFontBig60|Wait #Twait#| SetFontBig61|Wait #Twait#| SetFontBig62 |Wait #Twait#| SetFontBig63|Wait #Ttype#| SetFontBig64|Wait #Ttype#| SetFontBig65|Wait #Ttype#| SetFontBig66|Wait #Ttype#| SetFontBig67|Wait #Ttype#| SetFontBig68|Wait #Ttype#| SetFontBig69|Wait #Ttype#| SetFontBig70  |Wait #Ttype#| SetFontBig71|Wait #Ttype#| SetFontBig72|Wait #Ttype#| SetFontBig73|Wait #Ttype#| SetFontBig74|Wait #Ttype#|SetFontBig75|Wait #Ttype#| SetFontBig76|Wait #Ttype#| SetFontBig77|Wait #Ttype#| SetFontBig78|Wait #Ttype#| SetFontBig79|Wait #Ttype#| SetFontBig80 |Wait #Ttype#| SetFontBig81|Wait #Ttype#| SetFontBig82|Wait #Ttype#| SetFontBig83|Wait #Ttype#| SetFontBig84|Wait #Ttype#| SetFontBig85|Wait #Twait#| SetFontBig86|Wait #Twait#| SetFontBig87|Wait #Twait#| SetFontBig88|Wait #Twait#| SetFontBig89|Wait #Ttype#| SetFontBig90 |Wait #Ttype#| SetFontBig91|Wait #Ttype#| SetFontBig92|Wait #Ttype#| SetFontBig93|Wait #Ttype#| SetFontBig94|Wait #Ttype#| SetFontBig95|Wait #Ttype#| SetFontBig96|Wait #Ttype#| SetFontBig97|Wait #Ttype#| SetFontBig98|Wait #Ttype#| SetFontBig99 |Wait #Ttype#| SetFontBig100|Wait #Ttype#| SetFontBig101|Wait #Ttype#| SetFontBig102|Wait #Ttype#| SetFontBig103|Wait #Ttype#| SetFontBig104|Wait #Ttype#| SetFontBig105|Wait #Ttype#| SetFontBig106 |Wait #Ttype#| SetFontBig107|Wait #Ttype#| SetFontBig108|Wait #Ttype#| SetFontBig109|Wait #Ttype#| SetFontBig110 |Wait #Ttype#| SetFontBig111|Wait #Ttype#| SetFontBig112|Wait #Ttype#| SetFontBig113|Wait #Ttype#| SetFontBig114|Wait #Ttype#| SetFontBig115|Wait #Twait#| SetFontBig116|Wait #Twait#| SetFontBig117 |Wait #Tload#| SetFontBig118|Wait #Tload#| SetFontBig119|Wait #Tload#| SetFontBig120 |Wait #Tload#| SetFontBig121|Wait #Tload#| SetFontBig122|Wait #Tload#| SetFontBig123|Wait #Tload#| SetFontBig124|Wait #Ttype#| SetFontBig125|Wait #Ttype#| SetFontBig126|Wait #Ttype#| SetFontBig127|Wait #Ttype#| SetFontBig128|Wait #Ttype#| SetFontBig129|Wait #Ttype#| SetFontBig130 |Wait #Ttype#| SetFontBig131|Wait #Ttype#| SetFontBig132|Wait #Ttype#| SetFontBig133|Wait #Ttype#| SetFontBig134|Wait #Ttype#| SetFontBig135|Wait #Ttype#| SetFontBig136 |Wait #Ttype#| SetFontBig137|Wait #Ttype#| SetFontBig138|Wait #Ttype#| SetFontBig139|Wait #Ttype#| SetFontBig140 |Wait #Ttype#| SetFontBig141|Wait #Ttype#| SetFontBig142|Wait #Ttype#| SetFontBig143|Wait #Ttype#| SetFontBig144|Wait #Ttype#| SetFontBig145|Wait #Twait#| SetFontBig146|Wait #Twait#| SetFontBig147|Wait #Twait#| SetFontBig148|Wait #Twait#| SetFontBig149|Wait #Twait#| SetFontBig150 |Wait #Ttype#| SetFontBig151|Wait #Ttype#| SetFontBig152|Wait #Ttype#| SetFontBig153|Wait #Ttype#| SetFontBig154|Wait #Ttype#| SetFontBig155|Wait #Ttype#| SetFontBig156|Wait #Twait#| SetFontBig157|Wait #Twait#| SetFontBig158|Wait #Twait#| SetFontBig159|Wait #Twait#| SetFontBig160 |Wait #Twait#| SetFontBig161|Wait #Twait#| SetFontBig162|Wait #Twait#| SetFontBig163|Wait #Twait#| SetFontBig164|Wait #Twait#| SetFontBig165|Wait #Twait#| SetFontBig166|Wait #TwaitInitial#| SetFontBig167|Wait #TwaitInitial#| SetFontBig168|Wait #TwaitInitial#| SetFontBig169|Wait #Twait#| SetFontBig170 |Wait #Twait#| SetFontBig171|Wait #Twait#| SetFontBig172|Wait #Twait#| SetFontBig173|Wait #Twait#| SetFontBig174|Wait #Twait#| SetFontBig175|Wait #TwaitInitial#| SetFontBig176|Wait #TwaitInitial#| SetFontBig177|Wait #TwaitInitial#| SetFontBig178|Wait #TwaitInitial#| SetFontBig179 |Wait #TwaitInitial#| SetFontBig180 |Wait #TwaitInitial#| SetFontBig181|Wait #Twait#| SetFontBig182|Wait #Twait#| SetFontBig183 |Wait #Twait#| SetFontBig184|Wait #Twait#| SetFontBig185|Wait #Twait#| SetFontBig186|Wait #Twait#| SetFontBig187|Wait #Twait#| SetFontBig188|Wait #Twait#| SetFontBig189|Wait #Twait#| SetFontBig190 |Wait #Twait#| SetFontBig191|Wait #Twait#| SetFontBig192|Wait #Twait#| SetFontBig193|Wait #Twait#| SetFontBig194|Wait #Twait#| SetFontBig195|Wait #Twait#| SetFontBig196|Wait #Twait#| SetFontBig197|Wait #Twait#| SetFontBig198|Wait #Twait#| SetFontBig199|Wait #Twait#| SetFontBig200 Wait #Twait#| SetFontBig201 |Wait #Ttype#| SetFontBig202|Wait #Ttype#| SetFontBig203 |Wait #Ttype#| SetFontBig204|Wait #Ttype#| SetFontBig205|Wait #Ttype#| SetFontBig206|Wait #Ttype#| SetFontBig207|Wait #Ttype#| SetFontBig208|Wait #Ttype#| SetFontBig209|Wait #Ttype#| SetFontBig210|Wait #Ttype#| SetFontBig211 |Wait #Ttype#| SetFontBig212|Wait #Ttype#| SetFontBig213 |Wait #Ttype#| SetFontBig214|Wait #Ttype#| SetFontBig215|Wait #Ttype#| SetFontBig216|Wait #Ttype#| SetFontBig217|Wait #Ttype#| SetFontBig218|Wait #Ttype#| SetFontBig219|Wait #Ttype#| SetFontBig220|Wait #Ttype#| SetFontBig221 |Wait #Ttype#| SetFontBig222|Wait #Ttype#| SetFontBig223| |Wait #Twait#| SetFontBig224|Wait #Twait#| SetFontBig225|Wait #Twait#| SetFontBig226|Wait #Twait#| SetFontBig227|Wait #Twait#| SetFontBig228|Wait #Twait#| SetFontBig229|Wait #Twait#| SetFontBig230|Wait #Twait#| SetFontBig231 |Wait #Twait#| SetFontBig232|Wait #Twait#| SetFontBig233 |Wait #Twait#| SetFontBig234|Wait #Twait#| SetFontBig235|Wait #Twait#| SetFontBig236 |Wait #Twait#| SetFontBig237|Wait #Twait#| SetFontBig238 |Wait #Twait#| SetFontBig239|Wait #Twait#| SetFontBig240|Wait #Twait#| SetFontBig241|Wait #Twait#| SetFontBig242|Wait #Twait#| SetFontBig243 |Wait #Ttype#| SetFontBig244|wait #Ttype#| SetFontBig245|Wait #Ttype#| SetFontBig246|Wait #Ttype#| SetFontBig247|Wait #Ttype#| SetFontBig248 |Wait #Ttype#| SetFontBig249|Wait #Ttype#| SetFontBig250|Wait #Ttype#| SetFontBig251|Wait #Ttype#| SetFontBig252|Wait #Ttype#| SetFontBig253 |Wait #Ttype#| SetFontBig254|wait #Ttype#| SetFontBig255|Wait #Ttype#| SetFontBig256|Wait #Ttype#| SetFontBig257|Wait #Ttype#| SetFontBig258 |Wait #Ttype#| SetFontBig259|Wait #Ttype#| SetFontBig260|Wait #Ttype#| SetFontBig261|Wait #Ttype#| SetFontBig262|Wait #Ttype#| SetFontBig263 |Wait #Ttype#| SetFontBig264|wait #Ttype#| SetFontBig265|Wait #Ttype#| SetFontBig266|Wait #Ttype#| SetFontBig267|Wait #Ttype#| SetFontBig268 |Wait #Ttype#| SetFontBig269|Wait #Ttype#| SetFontBig270|Wait #Ttype#|SetFontBig271|Wait #Ttype#| SetFontBig272|Wait #Ttype#| SetFontBig273 |Wait #Ttype#| SetFontBig274|wait #Ttype#| SetFontBig275|Wait #Ttype#| SetFontBig276|Wait #Ttype#| SetFontBig277|Wait #Ttype#| SetFontBig278 |Wait #Ttype#| SetFontBig279|Wait #Ttype#| SetFontBig280|Wait #Ttype#|SetFontBig281|Wait #Ttype#| SetFontBig282|Wait #Ttype#| SetFontBig283 |Wait #Ttype#| SetFontBig284|wait #Ttype#| SetFontBig285|Wait #Ttype#| SetFontBig286|Wait #Ttype#| SetFontBig287|Wait #Ttype#| SetFontBig288 |Wait #Ttype#| SetFontBig289|Wait #Ttype#| SetFontBig290|Wait #Ttype#|SetFontBig291|Wait #Ttype#| SetFontBig292|Wait #Ttype#| SetFontBig293|Wait #Ttype#| SetFontBig294|Wait #Ttype#| SetFontBig295 |Wait #Ttype#| SetFontBig296|Wait #Ttype#| SetFontBig297|Wait #Ttype#| SetFontBig298 |Wait #Ttype#| SetFontBig299|Wait #Ttype#| SetFontBig300|Wait #Ttype#|SetFontBig301|Wait #Ttype#| SetFontBig302|Wait #Ttype#| SetFontBig303 |Wait #Ttype#| SetFontBig304|wait #Ttype#| SetFontBig305|Wait #Ttype#| SetFontBig306|Wait #Ttype#| SetFontBig307|Wait #Ttype#| SetFontBig308|Wait #Ttype#| SetFontBig309|Wait #Ttype#| SetFontBig310
+
+;As nothing happens immedietly, this actiontimer action is left blank as a dummy
+SetFontSmall=
+
+
+SetFontBig1=[!SetVariable TEXTVAR ">"] [!SetVariable WHITETEXTVAR "Initiating Security Protocol"]
+SetFontBig2=[!SetVariable TEXTVAR ">_"]
+SetFontBig3=[!SetVariable TEXTVAR ">"][!SetVariable WHITETEXTVAR "Initiating Security Protocol #CRLF#	Charlie_Gamma-02"]
+SetFontBig4=[!SetVariable TEXTVAR ">_"]
+SetFontBig5=[!SetVariable TEXTVAR ">"]
+SetFontBig6=[!SetVariable TEXTVAR ">_"][!SetVariable WHITETEXTVAR "Initiating Security Protocol #CRLF#	Charlie_Gamma-02:#CRLF#------Executing Protocol------"]
+SetFontBig7=[!SetVariable TEXTVAR ">"]
+SetFontBig8=[!SetVariable TEXTVAR ">_"]
+SetFontBig9=[!SetVariable TEXTVAR ">"]
+SetFontBig10=[!SetVariable TEXTVAR ">_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079"]
+
+;System Startup Initiated
+SetFontBig11=[!SetVariable TEXTVAR ">S_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#S"]
+SetFontBig12=[!SetVariable TEXTVAR ">SC_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Se"]
+SetFontBig13=[!SetVariable TEXTVAR ">SCP_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Sea"]
+SetFontBig14=[!SetVariable TEXTVAR ">SCP _"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Sear"]
+SetFontBig15=[!SetVariable TEXTVAR ">SCP S_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searc"]
+SetFontBig16=[!SetVariable TEXTVAR ">SCP SE_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Search"]
+SetFontBig17=[!SetVariable TEXTVAR ">SCP SEC_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searchi"]
+SetFontBig18=[!SetVariable TEXTVAR ">SCP SECU_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searchin"]
+SetFontBig19=[!SetVariable TEXTVAR ">SCP SECUR_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching"]
+SetFontBig20=[!SetVariable TEXTVAR ">SCP SECURE_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching "]
+SetFontBig21=[!SetVariable TEXTVAR ">SCP SECURE-_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching F"]
+SetFontBig22=[!SetVariable TEXTVAR ">SCP SECURE-C_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching Fo"]
+SetFontBig23=[!SetVariable TEXTVAR ">SCP SECURE-CO_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For"]
+SetFontBig24=[!SetVariable TEXTVAR ">SCP SECURE-COM_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For "]
+SetFontBig25=[!SetVariable TEXTVAR ">SCP SECURE-COMM_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For M"]
+SetFontBig26=[!SetVariable TEXTVAR ">SCP SECURE-COMMU_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Me"]
+SetFontBig27=[!SetVariable TEXTVAR ">SCP SECURE-COMMUN_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Mem"]
+SetFontBig28=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNI_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memo"]
+SetFontBig29=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNIC_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memor"]
+SetFontBig30=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICA_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory"]
+SetFontBig31=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICAT_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory "]
+SetFontBig32=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATI_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory T"]
+SetFontBig33=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATIO_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Tr"]
+SetFontBig34=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Tra"]
+SetFontBig35=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION S_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Trac"]
+SetFontBig36=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SY_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Trace"]
+SetFontBig37=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYS_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces"]
+SetFontBig38=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYST_"][!SetVariable GREENTEXTVAR " #CRLF##CRLF##CRLF##CRLF##CRLF##CRLF#|-------------------|"]
+SetFontBig39=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTE_"][!SetVariable GREENTEXTVAR " #CRLF##CRLF##CRLF##CRLF##CRLF##CRLF#|\\-----------------|"]
+SetFontBig40=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM_"]
+SetFontBig41=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v_"]
+SetFontBig42=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1_"][!SetVariable GREENTEXTVAR " #CRLF##CRLF##CRLF##CRLF##CRLF##CRLF#|\\\\\\-------------|"]
+SetFontBig43=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1._"]
+SetFontBig44=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3_"][!SetVariable GREENTEXTVAR " #CRLF##CRLF##CRLF##CRLF##CRLF##CRLF#|\\\\\\\\-----------|"]
+SetFontBig45=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 :_"]
+SetFontBig46=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : B_"]
+SetFontBig46=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BO_"]
+SetFontBig47=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOO_"][!SetVariable GREENTEXTVAR " #CRLF##CRLF##CRLF##CRLF##CRLF##CRLF#|\\\\\\\\\\\--------|"]
+SetFontBig48=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT_"]
+SetFontBig49=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT C_"][!SetVariable GREENTEXTVAR " #CRLF##CRLF##CRLF##CRLF##CRLF##CRLF#|\\\\\\\\\\\\\\\----|"]
+SetFontBig50=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT CO_"]
+SetFontBig51=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COM_"][!SetVariable GREENTEXTVAR " #CRLF##CRLF##CRLF##CRLF##CRLF##CRLF#|\\\\\\\\\\\\\\\\\\\|"]
+SetFontBig52=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMP_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#T"]
+SetFontBig53=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPL_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Te"]
+SetFontBig55=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLE_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Tes"]
+SetFontBig56=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLET_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test"]
+SetFontBig57=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test "]
+
+;(wait Twait)
+SetFontBig58=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE"] [!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: x"]
+SetFontBig59=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: +"]
+SetFontBig60=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: x"]
+SetFontBig61=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: +"]
+SetFontBig62=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR"]
+
+;(wait Ttype)
+SetFontBig63=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#_"] [!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#"]
+SetFontBig64=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#I_"] 
+SetFontBig65=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#IN_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633"]
+SetFontBig66=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INI_"]
+SetFontBig67=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INIT_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#V"]
+SetFontBig68=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITI_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Vi"]
+SetFontBig69=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIA_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Vir"]
+SetFontBig70=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIAT_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Viru"]
+SetFontBig71=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATI_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus"]
+SetFontBig72=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATIN_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus S"]
+SetFontBig73=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Sc"]
+SetFontBig74=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING P_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Sca"] 
+SetFontBig75=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PR_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan"]
+SetFontBig76=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PRO_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan:"]
+SetFontBig77=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROT_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: "]
+SetFontBig78=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTO_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: 0%"]
+SetFontBig79=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOC_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: 0%"]
+SetFontBig80=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCO_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: 5%"]
+SetFontBig81=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: 10%"]
+SetFontBig82=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: 23%"]
+SetFontBig83=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 5_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: 38%"]
+SetFontBig84=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: 49%"]
+
+SetFontBig85=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: 78%"]
+SetFontBig86=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: 89%"]
+SetFontBig87=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: 99%"]
+SetFontBig88=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: 99%"]
+
+SetFontBig89=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#C_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE"]
+SetFontBig90=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CO_"][!SetVariable GREENTEXTVAR " #CRLF##CRLF##CRLF##CRLF##CRLF##CRLF#|\\\\\\\\\\\\\\\\\\\|#CRLF##CRLF##CRLF##CRLF##CRLF#No Virus Detected"]
+SetFontBig91=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CON_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633"]
+SetFontBig92=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONN_"]
+SetFontBig92=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNE_"]
+SetFontBig93=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNEC_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#C"]
+SetFontBig94=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECT_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Ch"]
+SetFontBig95=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTI_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Che"]
+SetFontBig96=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTIN_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Chec"]
+SetFontBig97=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Check"]
+SetFontBig98=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING T_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checki"]
+SetFontBig99=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checkin"]
+SetFontBig100=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO O_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking"]
+SetFontBig101=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking "]
+SetFontBig102=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-S_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking Lo"]
+SetFontBig103=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SI_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking Loca"]
+SetFontBig105=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SIT_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking Locati"]
+SetFontBig106=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking Location"]
+SetFontBig107=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE M_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking Location "]
+SetFontBig108=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MA_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking Location Via:"]
+SetFontBig109=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAI_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking Location Via:"]
+SetFontBig110=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAIN_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking Location Via: #CRLF#IP-Address"]
+SetFontBig111=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINF_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking Location Via: #CRLF#IP-Address#CRLF#............."]
+SetFontBig112=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFR_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking Location Via: #CRLF#IP-Address#CRLF#**........... "]
+SetFontBig113=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRA_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking Location Via: #CRLF#IP-Address#CRLF#*******...... "]
+SetFontBig114=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAM_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking Location Via: #CRLF#IP-Address#CRLF#*********.... "]
+SetFontBig115=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME_"][!SetVariable REDTEXTVAR " #CRLF##CRLF##CRLF##CRLF#:TEST 1: SCP-079#CRLF#Searching For Memory Traces#CRLF##CRLF#Test: CLEAR#CRLF##CRLF#:TEST 2: SCP-633#CRLF#Virus Scan: COMPLETE#CRLF##CRLF##CRLF#:TEST 2: SCP-633#CRLF#Checking Location Via: #CRLF#IP-Address#CRLF#************* "]
+
+SetFontBig116=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |------------|"][!SetVariable GREENTEXTVAR " #CRLF##CRLF##CRLF##CRLF##CRLF##CRLF#|\\\\\\\\\\\\\\\\\\\|#CRLF##CRLF##CRLF##CRLF##CRLF#No Virus Detected#CRLF##CRLF##CRLF##CRLF##CRLF##CRLF#Result: Connection Safe"]
+
+SetFontBig117=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |***---------|"][!SetVariable GREENTEXTVAR " #CRLF##CRLF##CRLF##CRLF##CRLF##CRLF#|\\\\\\\\\\\\\\\\\\\|#CRLF##CRLF##CRLF##CRLF##CRLF#No Virus Detected#CRLF##CRLF##CRLF##CRLF##CRLF##CRLF#Result: Connection Safe#CRLF##CRLF#Tests Complete. #CRLF#Sending Results to: #CRLF#SCP-On site mainframe"]
+SetFontBig118=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |******------|"]
+SetFontBig119=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |*******-----|"]
+SetFontBig120=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |*********---|"]
+SetFontBig121=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |***********-|"]
+SetFontBig122=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|"]
+
+SetFontBig123=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#C_"]
+SetFontBig124=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CO_"]
+SetFontBig125=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CON_"]
+SetFontBig126=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONN_"]
+SetFontBig127=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNE_"]
+SetFontBig128=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNEC_"]
+SetFontBig129=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECT_"]
+SetFontBig130=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTI_"]
+SetFontBig131=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTIO_"]
+SetFontBig132=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION_"]
+SetFontBig133=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION _"]
+SetFontBig134=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION E_"]
+SetFontBig135=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION ES_"]
+SetFontBig136=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION EST_"]
+SetFontBig137=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION ESTA_"]
+SetFontBig138=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION ESTAB_"]
+SetFontBig139=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION ESTABL_"]
+SetFontBig140=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION ESTABLI_"]
+SetFontBig141=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION ESTABLIS_"]
+SetFontBig142=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION ESTABLISH_"]
+SetFontBig143=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION ESTABLISHE_"]
+SetFontBig144=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION ESTABLISHED_"]
+
+SetFontBig145=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION ESTABLISHED_"]
+SetFontBig146=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION ESTABLISHED"]
+SetFontBig147=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION ESTABLISHED_"]
+SetFontBig148=[!SetVariable TEXTVAR ">SCP SECURE-COMMUNICATION SYSTEM v1.3 : BOOT COMPLETE#CRLF#INITIATING PROTOCOL 57#CRLF#CONNECTING TO ON-SITE MAINFRAME |************|#CRLF#CONNECTION ESTABLISHED"]
+SetFontBig160=[!SetVariable TEXTVAR " "]
+SetFontBig161=[!SetVariable TEXTVAR " "][!SetVariable REDTEXTVAR ""][!SetVariable GREENTEXTVAR ""][!SetVariable WHITETEXTVAR "Accessing Main Directory..."][!ShowMeterGroup "MenuLayer_Main_1"][!CommandMeasure MeasureLoadingValues "Execute 1"]
+UpdateDivider=1
+;Avalible Options For Navigating System:
+
+;-------------------------------Main Menu------------------------
+[MeterMouse_MainMenu_1]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+10
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=SCP Documentation
+LeftMouseUpAction=[!HideMeterGroup "MenuLayer_Main_1"][!ShowMeterGroup "MenuLayer_MeterMouse_SecureTestingControl_1"][!SetVariable REDTEXTVAR "#CRLF##CRLF##CRLF##CRLF##CRLF#Request Accepted."][!SetVariable GREENTEXTVAR "#CRLF##CRLF##CRLF#Access_Request_001x12_Sent."][!SetVariable WHITETEXTVAR "Requesting Secure Testing Control#CRLF#From SCP Automated System...#CRLF##CRLF##CRLF##CRLF##CRLF#Displaying Results..."]
+
+MouseOverAction=[!SetOption MeterMouse_MainMenu_1 SolidColor 225,225,225,255] [!SetOption MeterMouse_MainMenu_1 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_MainMenu_1 SolidColor 0,0,0,1] [!SetOption MeterMouse_MainMenu_1 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_Main_1
+
+[MeterMouse_MainMenu_2]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+60
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_2#
+FontFace= Consolas
+AntiAlias=1
+Text=Facility Communications Access
+LeftMouseUpAction=[!HideMeterGroup "MenuLayer_Main_1"][!ShowMeterGroup "MenuLayer_MeterMouse_FacilityCommunication_1"][!SetVariable REDTEXTVAR "#CRLF##CRLF##CRLF##CRLF#[Connection Secture]"][!SetVariable GREENTEXTVAR "#CRLF##CRLF#Preparing SCP Communications Protocols#CRLF#For Mainframe Requests."][!SetVariable WHITETEXTVAR "SCP Facility Communications Directory#CRLF#Accessed..."]
+
+MouseOverAction=[!SetOption MeterMouse_MainMenu_2 SolidColor 225,225,225,255] [!SetOption MeterMouse_MainMenu_2 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_MainMenu_2 SolidColor 0,0,0,1] [!SetOption MeterMouse_MainMenu_2 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_Main_1
+
+[MeterMouse_MainMenu_3]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+110
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_3#
+FontFace= Consolas
+AntiAlias=1
+Text=Terminal Diagnostics
+LeftMouseUpAction=[!HideMeterGroup "MenuLayer_Main_1"][!ShowMeterGroup "MenuLayer_MeterMouse_LauncherSystem_1"]
+LeftMouseUpAction=[!HideMeterGroup "MenuLayer_Main_1"][!ShowMeterGroup "MenuLayer_MeterMouse_Useful_1"]
+MouseOverAction=[!SetOption MeterMouse_MainMenu_3 SolidColor 225,225,225,255] [!SetOption MeterMouse_MainMenu_3 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_MainMenu_3 SolidColor 0,0,0,1] [!SetOption MeterMouse_MainMenu_3 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_Main_1
+
+[MeterMouse_MainMenu_4]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+160
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_3#
+FontFace= Consolas
+AntiAlias=1
+Text=Basic Online Connections
+LeftMouseUpAction=[!HideMeterGroup "MenuLayer_Main_1"][!ShowMeterGroup "MenuLayer_MeterMouse_Useful_1"]
+MouseOverAction=[!SetOption MeterMouse_MainMenu_4 SolidColor 225,225,225,255] [!SetOption MeterMouse_MainMenu_4 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_MainMenu_4 SolidColor 0,0,0,1] [!SetOption MeterMouse_MainMenu_4 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_Main_1
+;--------------------------------------------------------------
+
+;-------------------------------Secure Testing Control------------------------
+[MeterMouse_SecureTestingControl_1]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+10
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=Return
+LeftMouseUpAction=[!HideMeterGroup "MenuLayer_MeterMouse_SecureTestingControl_1"][!ShowMeterGroup "MenuLayer_Main_1"][!SetVariable REDTEXTVAR ""][!SetVariable GREENTEXTVAR ""][!SetVariable WHITETEXTVAR "Accessing Main Directory...#CRLF#Done."]
+MouseOverAction=[!SetOption MeterMouse_SecureTestingControl_1 SolidColor 225,225,225,255] [!SetOption MeterMouse_SecureTestingControl_1 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_SecureTestingControl_1 SolidColor 0,0,0,1] [!SetOption MeterMouse_SecureTestingControl_1 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_SecureTestingControl_1
+
+[MeterMouse_SecureTestingControl_2]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+60
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=Series I
+LeftMouseUpAction=[!SetVariable REDTEXTVAR ""][!SetVariable GREENTEXTVAR ""][!SetVariable WHITETEXTVAR "Accessing SCP Series I Directory...#CRLF#Done."] ["C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Google Chrome" "http://www.scp-wiki.net/scp-series"]
+MouseOverAction=[!SetOption MeterMouse_SecureTestingControl_2 SolidColor 225,225,225,255] [!SetOption MeterMouse_SecureTestingControl_2 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_SecureTestingControl_2 SolidColor 0,0,0,1] [!SetOption MeterMouse_SecureTestingControl_2 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_SecureTestingControl_1
+
+[MeterMouse_SecureTestingControl_3]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+110
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=Series II
+LeftMouseUpAction=[!SetVariable REDTEXTVAR ""][!SetVariable GREENTEXTVAR ""][!SetVariable WHITETEXTVAR "Accessing SCP Series II Directory...#CRLF#Done."] ["C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Google Chrome" "http://www.scp-wiki.net/scp-series-2"]
+MouseOverAction=[!SetOption MeterMouse_SecureTestingControl_3 SolidColor 225,225,225,255] [!SetOption MeterMouse_SecureTestingControl_3 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_SecureTestingControl_3 SolidColor 0,0,0,1] [!SetOption MeterMouse_SecureTestingControl_3 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_SecureTestingControl_1
+
+[MeterMouse_SecureTestingControl_4]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+160
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=Series III
+LeftMouseUpAction=[!SetVariable REDTEXTVAR ""][!SetVariable GREENTEXTVAR ""][!SetVariable WHITETEXTVAR "Accessing SCP Series III Directory...#CRLF#Done."] ["C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Google Chrome" "http://www.scp-wiki.net/scp-series-3"]
+MouseOverAction=[!SetOption MeterMouse_SecureTestingControl_4 SolidColor 225,225,225,255] [!SetOption MeterMouse_SecureTestingControl_4 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_SecureTestingControl_4 SolidColor 0,0,0,1] [!SetOption MeterMouse_SecureTestingControl_4 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_SecureTestingControl_1
+
+[MeterMouse_SecureTestingControl_5]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+210
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=Series IV
+LeftMouseUpAction=[!SetVariable REDTEXTVAR ""][!SetVariable GREENTEXTVAR ""][!SetVariable WHITETEXTVAR "Accessing SCP Series IV Directory...#CRLF#Done."] ["C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Google Chrome" "http://www.scp-wiki.net/scp-series-4"]
+MouseOverAction=[!SetOption MeterMouse_SecureTestingControl_5 SolidColor 225,225,225,255] [!SetOption MeterMouse_SecureTestingControl_5 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_SecureTestingControl_5 SolidColor 0,0,0,1] [!SetOption MeterMouse_SecureTestingControl_5 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_SecureTestingControl_1
+
+[MeterMouse_SecureTestingControl_6]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+260
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=Series V
+LeftMouseUpAction=[!SetVariable REDTEXTVAR ""][!SetVariable GREENTEXTVAR ""][!SetVariable WHITETEXTVAR "Accessing SCP Series V Directory...#CRLF#Done."] ["C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Google Chrome" "http://www.scp-wiki.net/scp-series-5"]
+MouseOverAction=[!SetOption MeterMouse_SecureTestingControl_6 SolidColor 225,225,225,255] [!SetOption MeterMouse_SecureTestingControl_6 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_SecureTestingControl_6 SolidColor 0,0,0,1] [!SetOption MeterMouse_SecureTestingControl_6 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_SecureTestingControl_1
+
+;EXPERIMENTAL 'TWEENING' Effects testing (in the form of alpha flicker)
+
+;[MeterMouse_SecureTestingControl_2]
+;Meter=String
+;X=(0.28 * #WORKAREAWIDTH#)
+;Y=(0.222222222 * #WORKAREAHEIGHT#)+60
+;W=(#WORKAREAWIDTH#-60)
+;H=45
+;SolidColor=0,0,0,1
+;FontSize=14
+;FontColor=255,255,255,#Fadeload_1#
+;FontFace= Consolas
+;AntiAlias=1
+;Text=Detonate Explosives
+;LeftMouseUpAction=[!EnableMeasure "MeasureFlicker_State_1"][!EnableMeasure "MeasureFlicker_counter"]
+;MouseOverAction=[!SetOption MeterMouse_SecureTestingControl_2 SolidColor 225,225,225,255] [!SetOption MeterMouse_SecureTestingControl_2 FontColor 0,0,0,255] 
+;MouseLeaveAction=[!SetOption MeterMouse_SecureTestingControl_2 SolidColor 0,0,0,1] [!SetOption MeterMouse_SecureTestingControl_2 FontColor 225,225,225,255]
+;DynamicVariables=1
+;UpdateDivider=1
+;Hidden=1
+;Group=MenuLayer_MeterMouse_SecureTestingControl_1
+;--------------------------------------------------------------
+
+
+
+;-------------------------------InterFacility Communication------------------------
+[MeterMouse_FacilityCommunication_1]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+10
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=Return
+LeftMouseUpAction=[!HideMeter MeterChannelInputLabel][!HideMeterGroup "MenuLayer_MeterMouse_FacilityCommunication_1"][!HideMeterGroup "MenuLayer_MeterMouse_SCP_Servers"][!ShowMeterGroup "MenuLayer_Main_1"][!SetVariable REDTEXTVAR ""][!SetVariable GREENTEXTVAR ""][!SetVariable WHITETEXTVAR "Accessing Main Directory...#CRLF#Done."]
+
+MouseOverAction=[!SetOption MeterMouse_FacilityCommunication_1 SolidColor 225,225,225,255] [!SetOption MeterMouse_FacilityCommunication_1 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_FacilityCommunication_1 SolidColor 0,0,0,1] [!SetOption MeterMouse_FacilityCommunication_1 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_FacilityCommunication_1
+
+
+[MeterMouse_FacilityCommunication_2]
+Meter=String
+MeasureName=measureTime
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+60
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_2#
+FontFace= Consolas
+AntiAlias=1
+Text=--------------SCP-Mainframe confirmed [MeasureHOSTNAME] as online. Welcome [MeasureUSER_NAME]-------------- #CRLF##CRLF#	Please Adhere to all SCP regulations as per the Employee Protocol Manual#CRLF#		('Network Communications' page 251, paragraph 6) #CRLF# 		Credit to Tim Lindeberg for creating this system!
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_FacilityCommunication_1
+
+[MeterMouse_FacilityCommunication_3]
+Meter=String
+MeasureName=measureTime
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+180
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_3#
+FontFace= Consolas
+AntiAlias=1
+Text=[Toggle Site to Site Communications]
+LeftMouseUpAction=[!ToggleMeter MeterChannelInputLabel][!ToggleMeterGroup "MenuLayer_MeterMouse_SCP_Servers"] [!HideMeter "MeterMouse_SCP_Site_00_Server"] [!ToggleMeter "MeterMouse_FacilityCommunication_1"][!SetVariable REDTEXTVAR "#CRLF##CRLF##CRLF##CRLF##CRLF#[Ready to Connect to SCP-Site]"][!SetVariable GREENTEXTVAR "#CRLF#SCP Communications Protocol 28#CRLF#Status:Engaged"][!SetVariable WHITETEXTVAR "SCP-Avalible Sites:Loaded"]
+
+MouseOverAction=[!SetOption MeterMouse_FacilityCommunication_3 SolidColor 225,225,225,255] [!SetOption MeterMouse_FacilityCommunication_3 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_FacilityCommunication_3 SolidColor 0,0,0,1] [!SetOption MeterMouse_FacilityCommunication_3 FontColor 225,225,225,255]
+DynamicVariables=1
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_FacilityCommunication_1
+;--------------------------------------------------------------
+
+;-------------------------------Twitch Server Connect Options------------------------
+[MeterMouse_SCP_Site_00_Server]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+260
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=[Disconnect]
+LeftMouseUpAction=[!CommandMeasure TwitchMain "JoinChannel "][!SetVariable ConnectAutomatically 0][!ShowMeter "MeterMouse_SCP_Site_01_Server"][!ShowMeter "MeterMouse_SCP_Site_02_Server"][!HideMeter "MeterMouse_SCP_Site_00_Server"]
+MouseOverAction=[!SetOption MeterMouse_SCP_Site_00_Server SolidColor 225,225,225,255] [!SetOption MeterMouse_SCP_Site_00_Server FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_SCP_Site_00_Server SolidColor 0,0,0,1] [!SetOption MeterMouse_SCP_Site_00_Server FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_SCP_Servers
+
+[MeterMouse_SCP_Site_01_Server]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+310
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=[Connect to Site-01]
+LeftMouseUpAction=[!CommandMeasure TwitchMain "JoinChannel maxcorp_rainmeter_scp01"][!HideMeter "MeterMouse_SCP_Site_02_Server"][!SetVariable ConnectAutomatically 0][!ShowMeter "MeterMouse_SCP_Site_00_Server"][!HideMeter "MeterMouse_SCP_Site_01_Server"]
+MouseOverAction=[!SetOption MeterMouse_SCP_Site_01_Server SolidColor 225,225,225,255] [!SetOption MeterMouse_SCP_Site_01_Server FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_SCP_Site_01_Server SolidColor 0,0,0,1] [!SetOption MeterMouse_SCP_Site_01_Server FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_SCP_Servers
+
+[MeterMouse_SCP_Site_02_Server]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+360
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=[Connect to Site-02]
+LeftMouseUpAction=[!CommandMeasure TwitchMain "JoinChannel maxcorp_rainmeter_scp02"][!HideMeter "MeterMouse_SCP_Site_01_Server"][!SetVariable ConnectAutomatically 0][!ShowMeter "MeterMouse_SCP_Site_00_Server"][!HideMeter "MeterMouse_SCP_Site_02_Server"]
+MouseOverAction=[!SetOption MeterMouse_SCP_Site_02_Server SolidColor 225,225,225,255] [!SetOption MeterMouse_SCP_Site_02_Server FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MeterMouse_SCP_Site_02_Server SolidColor 0,0,0,1] [!SetOption MeterMouse_SCP_Site_02_Server FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_SCP_Servers
+
+
+;-------------------------------Terminal Diagnostics------------------------
+[MenuLayer_MeterMouse_LauncherSystem_1]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+10
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=Return
+LeftMouseUpAction=[!HideMeterGroup "MenuLayer_MeterMouse_LauncherSystem_1"][!ShowMeterGroup "MenuLayer_Main_1"][!SetVariable REDTEXTVAR ""][!SetVariable GREENTEXTVAR ""][!SetVariable WHITETEXTVAR "Accessing Main Directory...#CRLF#Done."]
+
+MouseOverAction=[!SetOption MenuLayer_MeterMouse_LauncherSystem_1 SolidColor 225,225,225,255] [!SetOption MenuLayer_MeterMouse_LauncherSystem_1 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MenuLayer_MeterMouse_LauncherSystem_1 SolidColor 0,0,0,1] [!SetOption MenuLayer_MeterMouse_LauncherSystem_1 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_LauncherSystem_1
+
+[MenuLayer_MeterMouse_LauncherSystem_2]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+60
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=Connected-Communications 'C-COM' SCP Distrubuted General User Access Terminal. Running Version C-COM v1.3
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_LauncherSystem_1
+
+[MenuLayer_MeterMouse_LauncherSystem_3]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+110
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=CPU Load:[measureCPU]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_LauncherSystem_1
+
+[MenuLayer_MeterMouse_LauncherSystem_4]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+160
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=RAM Load:[measureRAM]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_LauncherSystem_1
+
+[MenuLayer_MeterMouse_LauncherSystem_5]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+210
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=Swap Memory:[measureSWAP]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_LauncherSystem_1
+;--------------------------------------------------------------
+
+;-------------------------------Usefulness------------------------
+[MenuLayer_MeterMouse_Useful_1]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+10
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=******NOTICE*****#CRLF#Any breach of foundation data will result in SEVERE disciplinary measures #CRLF# up to and including reduction to D-Class personell.
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_Useful_1
+
+[MenuLayer_MeterMouse_Useful_2]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+110
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=Return
+LeftMouseUpAction=[!HideMeterGroup "MenuLayer_MeterMouse_Useful_1"][!ShowMeterGroup "MenuLayer_Main_1"][!SetVariable REDTEXTVAR ""][!SetVariable GREENTEXTVAR ""][!SetVariable WHITETEXTVAR "Accessing Main Directory...#CRLF#Done."]
+MouseOverAction=[!SetOption MenuLayer_MeterMouse_Useful_2 SolidColor 225,225,225,255] [!SetOption MenuLayer_MeterMouse_Useful_2 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MenuLayer_MeterMouse_Useful_2 SolidColor 0,0,0,1] [!SetOption MenuLayer_MeterMouse_Useful_2 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_Useful_1
+
+[MenuLayer_MeterMouse_Useful_3]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+160
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=Launch Google Search Engine
+LeftMouseUpAction=[!SetVariable WHITETEXTVAR "Internet Access Authorized.#CRLF#Launching Google Chrome Browser...#CRLF#Done.#CRLF##CRLF#WARNING!#CRLF# Antibrech_AI is#CRLF#ONLINE.#CRLF##CRLF#Please remember all SCP#CRLF#protocol against#CRLF#leaking data."] ["C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Google Chrome" "http://google.com"]
+MouseOverAction=[!SetOption MenuLayer_MeterMouse_Useful_3 SolidColor 225,225,225,255] [!SetOption MenuLayer_MeterMouse_Useful_3 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MenuLayer_MeterMouse_Useful_3 SolidColor 0,0,0,1] [!SetOption MenuLayer_MeterMouse_Useful_3 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_Useful_1
+
+[MenuLayer_MeterMouse_Useful_4]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+210
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=Launch Secure SCP Catalog Search Engine
+LeftMouseUpAction=[!SetVariable WHITETEXTVAR "SCP catalog access authorized.#CRLF#Launching Google Chrome Browser...#CRLF#Done.#CRLF##CRLF#WARNING!#CRLF# Antibrech_AI is#CRLF#ONLINE.#CRLF##CRLF#Please remember all SCP#CRLF#protocol against#CRLF#leaking data."] ["C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Google Chrome" "http://www.scp-wiki.net/"]
+MouseOverAction=[!SetOption MenuLayer_MeterMouse_Useful_4 SolidColor 225,225,225,255] [!SetOption MenuLayer_MeterMouse_Useful_4 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MenuLayer_MeterMouse_Useful_4 SolidColor 0,0,0,1] [!SetOption MenuLayer_MeterMouse_Useful_4 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_Useful_1
+
+[MenuLayer_MeterMouse_Useful_5]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+260
+W=(#WORKAREAWIDTH#-60)
+H=45
+SolidColor=0,0,0,1
+FontSize=14
+FontColor=255,255,255,#Fadeload_1#
+FontFace= Consolas
+AntiAlias=1
+Text=Launch Protrastination Algorithm (Youtube)
+LeftMouseUpAction=[!SetVariable WHITETEXTVAR "Google_Youtube catalog access authorized.#CRLF#Launching Google Chrome Browser...#CRLF#Done.#CRLF##CRLF#WARNING!#CRLF# Antibrech_AI is#CRLF#ONLINE.#CRLF##CRLF#Please remember all SCP#CRLF#protocol against#CRLF#leaking data."] ["C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Google Chrome" "https://www.youtube.com/"]
+MouseOverAction=[!SetOption MenuLayer_MeterMouse_Useful_5 SolidColor 225,225,225,255] [!SetOption MenuLayer_MeterMouse_Useful_5 FontColor 0,0,0,255] 
+MouseLeaveAction=[!SetOption MenuLayer_MeterMouse_Useful_5 SolidColor 0,0,0,1] [!SetOption MenuLayer_MeterMouse_Useful_5 FontColor 225,225,225,255]
+DynamicVariables=1
+UpdateDivider=1
+Hidden=1
+Group=MenuLayer_MeterMouse_Useful_1
+
+;====================General Meters==============
+
+;--------------------SHAKING--------------
+Flicker For Values
+[MeasureFlicker_State_1]
+Measure=Calc
+Formula=Random
+LowBound=10
+HighBound=(#Flicker_Value# * (2/[MeasureFlicker_counter]))
+UpdateRandom=1
+DynamicVariables=1
+UpdateDivider=1
+Disabled=1
+
+[MeasureFlicker_counter]
+Measure=Calc
+Formula=[MeasureFlicker_counter]+1
+IfEqualValue=200
+IfEqualAction=[!PauseMeasure "MeasureFlicker_State_1"][!PauseMeasure "MeasureFlicker_counter"]
+DynamicVariables=1
+Disabled=1
+
+[MeasureShake_x]
+Measure=Calc
+Formula=Random
+LowBound=10
+HighBound=(#Shake_Value# * (1.5/[MeasureDecreaseValue_X]))
+UpdateRandom=1
+DynamicVariables=1
+UpdateDivider=1
+Disabled=1
+
+This Measure produces the random variables that decide the wait time between changes in fade
+[MeasureShake_y]
+Measure=Calc
+Formula=Random
+LowBound=10
+HighBound=(#Shake_Value# * (1.5/[MeasureDecreaseValue_Y]))
+UpdateRandom=1
+DynamicVariables=1
+UpdateDivider=1
+Disabled=1
+
+
+
+[MeasureHOSTNAME]
+Measure=Plugin
+Plugin=SysInfo
+SysInfoType=HOST_NAME
+UpdateDivider=-1
+
+[MeasureUSER_NAME]
+Measure=Plugin
+Plugin=SysInfo
+SysInfoType=USER_NAME
+UpdateDivider=-1
+
+[Meter_SystemStartupText]
+Meter=String
+X=(0.276667 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)
+FontColor=255,255,255,255
+FontFace=Consolas
+FontSize=15
+StringEffect=Shadow
+FontEffectColor=0,0,0,255
+Text=#TEXTVAR# 
+AntiAlias=1
+DynamicVariables=1
+UpdateDivider=1
+
+[Meter_LeftTerminal_RED]
+Meter=String
+X=(0.003333 * #WORKAREAWIDTH#)
+Y=(0.28 * #WORKAREAHEIGHT#)
+FontColor=255,0,0,255
+FontFace=Consolas
+FontSize=15
+StringEffect=Shadow
+FontEffectColor=0,0,0,255
+Text=#REDTEXTVAR#
+AntiAlias=1
+DynamicVariables=1
+UpdateDivider=1
+
+[Meter_LeftTerminal_GREEN]
+Meter=String
+X=(0.003333 * #WORKAREAWIDTH#)
+Y=(0.28* #WORKAREAHEIGHT#)
+FontColor=0,255,0,255
+FontFace=Consolas
+FontSize=15
+StringEffect=Shadow
+FontEffectColor=0,0,0,255
+Text=#GREENTEXTVAR#
+AntiAlias=1
+DynamicVariables=1
+UpdateDivider=1
+
+[Meter_LeftTerminal_WHITE]
+Meter=String
+X=(0.003333 * #WORKAREAWIDTH#)
+Y=(0.28* #WORKAREAHEIGHT#)
+FontColor=255,255,255,255
+FontFace=Consolas
+FontSize=15
+Text=#WHITETEXTVAR#
+AntiAlias=1
+DynamicVariables=1
+UpdateDivider=1
+
+
+[Meter_C-COM Logo]
+Meter=String
+X=(0.343333333* #WORKAREAWIDTH#)
+Y=(0.0533333333* #WORKAREAHEIGHT#)
+FontColor=255,255,255,255
+FontFace=Consolas
+FontSize=25
+StringEffect=Shadow
+FontEffectColor=0,0,0,255
+Text=#TEXTBOOT# 
+AntiAlias=1
+DynamicVariables=1
+UpdateDivider=1
+
+[MeterImage SCP Logo]
+Meter=Image
+ImageName=#@#Images\SCP_LOGO.png
+X= (0.0166666667*#WORKAREAWIDTH#)
+Y= (0.0177777778 * #WORKAREAHEIGHT#)
+W=(0.246666667*#WORKAREAWIDTH#)
+H=(0.138*#WORKAREAHEIGHT#)
+ImageTint=225,225,225,[MeasureFadingGUI]
+DynamicVariables=1
+UpdateDivider=1
+
+[MeterShape1-Horizontal Line-C-COM Logo]
+Meter=Shape
+X=1
+Y=1
+Shape=Line 0,(0.19* #WORKAREAHEIGHT#),#WORKAREAWIDTH#,(0.19* #WORKAREAHEIGHT#) | Fill Color 255,255,255 | Stroke Color 255,255,255,([MeasureFadingGUI]-[MeasureFlicker_State_1]) | StrokeWidth 10
+DynamicVariables=1
+UpdateDivider=1
+
+[MeterShape2- Vertical Line Top-C-COM Logo]
+Meter=Shape
+X=1
+Y=1
+Shape=Line (0.293* #WORKAREAWIDTH#),(0),(0.293* #WORKAREAWIDTH#),(0.19* #WORKAREAHEIGHT#) | Fill Color 255,255,255 | Stroke Color 255,255,255,([MeasureFadingGUI]-[MeasureFlicker_State_1]) | StrokeWidth 10
+DynamicVariables=1
+UpdateDivider=1
+
+[MeterShape2- Angle Line Top-Warning Stripes]
+Meter=Shape
+X=1
+Y=1
+Shape=Line (0.293* #WORKAREAWIDTH#),(0.19* #WORKAREAHEIGHT#),(0.25* #WORKAREAWIDTH#),(0.26* #WORKAREAHEIGHT#) | Fill Color 255,255,255 | Stroke Color 255,255,255,([MeasureFadingGUI]-[MeasureFlicker_State_1]) | StrokeWidth 10
+DynamicVariables=1
+UpdateDivider=1
+
+;======== The Warning Stripes=======
+[MeterShape2- Angle Line Top-Warning Stripe_1]
+Meter=Shape
+X=1
+Y=1
+Shape=Line (0.26* #WORKAREAWIDTH#),(0.19* #WORKAREAHEIGHT#),(0.223* #WORKAREAWIDTH#),(0.26* #WORKAREAHEIGHT#) | Fill Color 255,255,255 | Stroke Color 255,255,255,(#WarnStripesFade_1#-[MeasureFlicker_State_1]) | StrokeWidth 14
+DynamicVariables=1
+UpdateDivider=1
+
+[MeterShape2- Angle Line Top-Warning Stripe_2]
+Meter=Shape
+X=1
+Y=1
+Shape=Line (0.23* #WORKAREAWIDTH#),(0.19* #WORKAREAHEIGHT#),(0.193* #WORKAREAWIDTH#),(0.26* #WORKAREAHEIGHT#) | Fill Color 255,255,255 | Stroke Color 255,255,255,(#WarnStripesFade_2#-[MeasureFlicker_State_1]) | StrokeWidth 14
+DynamicVariables=1
+UpdateDivider=1
+
+[MeterShape2- Angle Line Top-Warning Stripe_3]
+Meter=Shape
+X=1
+Y=1
+Shape=Line (0.2* #WORKAREAWIDTH#),(0.19* #WORKAREAHEIGHT#),(0.163* #WORKAREAWIDTH#),(0.26* #WORKAREAHEIGHT#) | Fill Color 255,255,255 | Stroke Color 255,255,255,(#WarnStripesFade_3#-[MeasureFlicker_State_1]) | StrokeWidth 14
+DynamicVariables=1
+UpdateDivider=1
+
+[MeterShape2- Angle Line Top-Warning Stripe_4]
+Meter=Shape
+X=1
+Y=1
+Shape=Line (0.17* #WORKAREAWIDTH#),(0.19* #WORKAREAHEIGHT#),(0.133* #WORKAREAWIDTH#),(0.26* #WORKAREAHEIGHT#) | Fill Color 255,255,255 | Stroke Color 255,255,255,(#WarnStripesFade_4#-[MeasureFlicker_State_1]) | StrokeWidth 14
+DynamicVariables=1
+UpdateDivider=1
+
+[MeterShape2- Angle Line Top-Warning Stripe_5]
+Meter=Shape
+X=1
+Y=1
+Shape=Line (0.14* #WORKAREAWIDTH#),(0.19* #WORKAREAHEIGHT#),(0.1033* #WORKAREAWIDTH#),(0.26* #WORKAREAHEIGHT#) | Fill Color 255,255,255 | Stroke Color 255,255,255,(#WarnStripesFade_5#-[MeasureFlicker_State_1]) | StrokeWidth 14
+DynamicVariables=1
+UpdateDivider=1
+
+;=========End Of Warning Stripes===========
+
+[MeterShape2- Angle Line Top-Warning Rectangle_1]
+Meter=Shape
+X=1
+Y=1
+Shape=Rectangle 0,(0.19* #WORKAREAHEIGHT#),150,10| Fill Color 255,255,255,(#WarnStripesFade_6#-[MeasureFlicker_State_1]) | Stroke Color 255,255,255,#WarnStripesFade_6# | StrokeWidth 5
+DynamicVariables=1
+UpdateDivider=1
+
+[MeterShape1-Horizontal Line-Warning Stripes]
+Meter=Shape
+X=1
+Y=1
+Shape=Line 0,(0.26* #WORKAREAHEIGHT#),(0.253* #WORKAREAWIDTH#),(0.26* #WORKAREAHEIGHT#) | Fill Color 255,255,255 | Stroke Color 255,255,255,([MeasureFadingGUI]-[MeasureFlicker_State_1]) | StrokeWidth 10
+DynamicVariables=1
+UpdateDivider=1
+[MeterShape1-Horizontal Main Separator]
+Meter=Shape
+X=1
+Y=1
+Shape=Line (0.25* #WORKAREAWIDTH#),(0.26* #WORKAREAHEIGHT#),(0.25* #WORKAREAWIDTH#),#WORKAREAHEIGHT# | Fill Color 255,255,255 | Stroke Color 255,255,255,([MeasureFadingGUI]-[MeasureFlicker_State_1]) | StrokeWidth 10
+DynamicVariables=1
+UpdateDivider=1
+
+
+;=============================================================================;
+;------------------------------- Twitch Stuff -------------------------------;
+;=============================================================================;
+
+
+[TwitchAutoConnector]
+Measure=Plugin
+Plugin=TwitchChat.dll
+Browser=#Browser#
+ConnectAutomatically=#ConnectAutomatically#
+DynamicVariables=1
+Type=AutoConnector
+;=============================================================================;
+;------------------------------- Channel input -------------------------------;
+;=============================================================================;
+[MeterChannelInputLabel]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+230
+W=2000
+H=#ChannelHeight#
+FontFace=Consolas
+FontSize=15
+FontColor=255,255,255,255
+AntiAlias=1
+Text="SCP Site Connection: [TwitchChannel]"
+DynamicVariables=1
+ClipString=1
+;LeftMouseUpAction=[!CommandMeasure MeasureChannelInput "ExecuteBatch 1-2"]
+
+[MeasureChannelInput]
+Measure=Plugin
+Plugin=InputText
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+210
+W=2000
+H=#ChannelHeight#
+FontFace=#ChannelFont#
+FontSize=#ChannelFontSize#
+FontColor=#ChannelFontColor#
+SolidColor=#ChannelActiveBackgroundColor#
+AntiAlias=1
+FocusDismiss=1
+Command1=[!CommandMeasure TwitchMain "JoinChannel $UserInput$"]
+Command2=[!SetVariable ConnectAutomatically 0]
+DynamicVariables=1
+UpdateDivider=1
+;=============================================================================;
+;------------------------------- Message input -------------------------------;
+;=============================================================================;
+
+[MeterMessageInputLabel]
+Meter=String
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.951111111 * #WORKAREAHEIGHT#)
+W=2000
+H=#InputHeight#
+SolidColor=225,225,225,50
+Y=(#ChannelHeight# + #ChatHeight# + #InputPadding#)
+Hidden=1
+LeftMouseUpAction=[!CommandMeasure MeasureMessageInput "ExecuteBatch 1"]
+
+[MeasureMessageInput]
+Measure=Plugin
+Plugin=InputText
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.951111111 * #WORKAREAHEIGHT#)
+W=2000
+H=#InputHeight#
+FontFace=Consolas
+FontSize=15
+FontColor=0,0,0,225
+SolidColor=225,225,225,225
+AntiAlias=1
+FocusDismiss=1
+Y=(#ChannelHeight# + #ChatHeight# + #InputPadding#)
+Command1=[!CommandMeasure TwitchMain "SendMessage $UserInput$"]
+DynamicVariables=1
+UpdateDivider=1
+;=============================================================================;
+;------------------------------ Twitch Measures ------------------------------;
+;=============================================================================;
+
+[TwitchMain]
+Measure=Plugin
+Plugin=TwitchChat.dll
+Username=#Username#
+Ouath=#Ouath#
+Width=2000
+Height=#ChatHeight#
+FontFace=#ChatFont#
+FontSize=#ChatFontSize#
+ImageDir=#ImageDir#
+ImageQuality=#ImageQuality#
+UseSeperator=#UseSeperator#
+UseBetterTTVEmotes=#UseBetterTTVEmotes#
+Type=Main
+DynamicVariables=1
+UpdateDivider=1
+
+[TwitchChannel]
+Measure=Plugin
+Plugin=TwitchChat.dll
+Type=ChannelName
+Substitute="":"None"
+[TwitchChannelStatus]
+Measure=Plugin
+Plugin=TwitchChat.dll
+Type=ChannelStatus
+
+[TwitchIsInChannel]
+Measure=Plugin
+Plugin=TwitchChat.dll
+Type=IsInChannel
+IfEqualValue=1
+IfEqualAction=[!ShowMeter MeterMessageInputLabel]
+IfBelowValue=1
+IfBelowAction=[!HideMeter MeterMessageInputLabel]
+
+[ImageWidth]
+Measure=Plugin
+Plugin=TwitchChat.dll
+Type=TwitchImageWidth
+
+[ImageHeight]
+Measure=Plugin
+Plugin=TwitchChat.dll
+Type=TwitchImageHeight
+
+;=============================================================================;
+;------------------------- Meter/measure generation --------------------------;
+;=============================================================================;
+
+[TwitchImageScript]
+Measure=Script
+ScriptFile=#@#scripts\Factory.lua
+IncFile=#@#generated\TwitchGenerated.inc
+NumImages=#NumImages#
+NumGifs=#NumGifs#
+NumLinks=#NumLinks#
+UpdateDivider=-1
+
+TwitchOption0=Measure
+TwitchValue0=Plugin
+TwitchOption1=Plugin
+TwitchValue1=TwitchChat.dll
+
+ImageNameOption0=IfMatch
+ImageNameValue0=_empty
+ImageNameOption1=IfMatchAction
+ImageNameValue1=[!HideMeter Image%%]
+ImageNameOption2=IfNotMatchAction
+ImageNameValue2=[!ShowMeter Image%%]
+
+ImageOption0=Meter
+ImageValue0=Image
+ImageOption1=ImageName
+ImageValue1=#ImageDir#\[ImageName%%]_#ImageQuality#.png
+ImageOption2=X
+ImageValue2=[ImageX%%]
+ImageOption3=Y
+ImageValue3=(#ChannelHeight# + [ImageY%%])
+ImageOption4=W
+ImageValue4=[*ImageWidth*]
+ImageOption5=H
+ImageValue5=[*ImageHeight*]
+ImageOption6=PreserveAspectRatio
+ImageValue6=1
+ImageOption7=ToolTipType
+ImageValue7=1
+ImageOption8=ToolTipText
+ImageValue8=[ImageToolTip%%]
+ImageOption9=DynamicVariables
+ImageValue9=1
+
+GifNameOption0=UpdateDivider
+GifNameValue0=1
+GifNameOption1=IfMatch
+GifNameValue1=_empty
+GifNameOption2=IfMatchAction
+GifNameValue2=[!HideMeter Gif%%]
+GifNameOption3=IfNotMatchAction
+GifNameValue3=[!ShowMeter Gif%%]
+
+GifOption0=Meter
+GifValue0=Image
+GifOption1=ImageName
+GifValue1=#ImageDir#\[GifName%%]_#ImageQuality#.png
+GifOption2=X
+GifValue2=[GifX%%]
+GifOption3=Y
+GifValue3=(#ChannelHeight# + [GifY%%])
+GifOption4=W
+GifValue4=[*ImageWidth*]
+GifOption5=H
+GifValue5=[*ImageHeight*]
+GifOption6=PreserveAspectRatio
+GifValue6=1
+GifOption7=ToolTipType
+GifValue7=1
+GifOption8=ToolTipText
+GifValue8=[GifToolTip%%]
+GifOption9=DynamicVariables
+GifValue9=1
+GifOption10=UpdateDivider
+GifValue10=1
+
+LinkOption0=Meter
+LinkValue0=String
+LinkOption1=X
+LinkValue1=[LinkX%%]
+LinkOption2=Y
+LinkValue2=(#ChannelHeight# + [LinkY%%])
+LinkOption3=H
+LinkValue3=[LinkHeight%%]
+LinkOption4=W
+LinkValue4=[LinkWidth%%]
+LinkOption5=SolidColor
+LinkValue5=00000001
+LinkOption6=FontFace
+LinkValue6=#ChatFont#
+LinkOption7=FontSize
+LinkValue7=#ChatFontSize#
+LinkOption8=FontColor
+LinkValue8=#LinkColor#
+LinkOption9=AntiAlias
+LinkValue9=1
+LinkOption10=InlineSetting
+LinkValue10=Underline
+LinkOption11=InlinePattern
+LinkValue11=.*
+LinkOption12=Text
+LinkValue12=[LinkName%%]
+LinkOption13=LeftMouseUpAction
+LinkValue13=["#BrowserLocation#" "[LinkUrl%%]"]
+LinkOption14=DynamicVariables
+LinkValue14=1
+DynamicVariables=1
+UpdateDivider=1
+
+[ScriptRefresher]
+Measure=Script
+ScriptFile=#@#scripts\Refresher.lua
+UpdateDivider=-1
+Refreshed=0
+
+;=============================================================================;
+;----------------------------- Twitch chat meter -----------------------------;
+;=============================================================================;
+
+[TwitchChatTextMeter]
+Meter=String
+MeasureName=TwitchMain
+X=(0.28 * #WORKAREAWIDTH#)
+Y=(0.222222222 * #WORKAREAHEIGHT#)+310
+FontFace=Consolas
+FontSize=15
+FontColor=255,0,0,255
+AntiAlias=1
+Y=#ChannelHeight#
+W=2000
+H=#ChatHeight#
+InlineSetting=Color|#ChatUserFontColor#
+InlinePattern=^ *<(.+?)>:|\n *<(.+?)>:
+InlineSetting1=Color|00FF00
+InlinePattern1=^ *<(#Username#)>:|\n *<(#Username#)>:
+InlineSetting2=Color|00FF00
+InlinePattern2=#Username#
+Text=%1
+DynamicVariables=1
+UpdateDivider=1
+@IncludeGenerated=#@#generated\TwitchGenerated.inc
